@@ -4,34 +4,48 @@ defmodule IntermodalContainers.Parser do
   alias IntermodalContainers.ContainerNumber
 
   def parse(code) when is_binary(code) and byte_size(code) == 11 do
-    parse(code, 0, %ContainerNumber{})
+    parse_step({code, 0, %ContainerNumber{}})
   end
 
-  def parse(code, 0, acc) when byte_size(code) == 11 do
-    {owner_code, rest} = String.split_at(code, 3)
-    validate_owner_code(owner_code)
-    |> handle(rest, 3, acc)
+  def parse_step({code, 0, _} = parse_state) when byte_size(code) == 11 do
+    validator = &validate_owner_code/1
+    consume(parse_state, 3, validator)
   end
 
-  def parse(code, 3, acc) when byte_size(code) == 8 do
-    {category_identifier, rest} = String.split_at(code, 1)
-    validate_category_identifier(category_identifier)
-    |> handle(rest, 4, acc)
+  def parse_step({remaining_code, 3, _} = parse_state) when byte_size(remaining_code) == 8 do
+    validator = &validate_category_identifier/1
+    consume(parse_state, 1, validator)
   end
 
-  def parse(code, 4, acc) when byte_size(code) == 7 do
-    {serial_number, rest} = String.split_at(code, 6)
-    validate_serial_number(serial_number)
-    |> handle(rest, 10, acc)
+  def parse_step({remaining_code, 4, _} = parse_state) when byte_size(remaining_code) == 7 do
+    validator = &validate_serial_number/1
+    consume(parse_state, 6, validator)
   end
 
-  def parse(check_digit, 10, acc) when byte_size(check_digit) == 1 do
-    validate_check_digit(check_digit)
-    |> handle("", 11, acc)
+  def parse_step({check_digit, 10, _} = parse_state) when byte_size(check_digit) == 1 do
+    validator = &validate_check_digit/1
+    consume(parse_state, 1, validator)
   end
 
-  def parse(code, position, acc) do
-    {:error, "Unidentified parse step for #{code} at #{position}. State: #{inspect acc}"}
+  def parse_step({code, position, parsed_container_number}) do
+    {:error, "Unidentified parse step for #{code} at #{position}. State: #{inspect parsed_container_number}"}
+  end
+
+  defp consume({code, position, parsed_container_number}, size, validator) do
+    {target, rest} = String.split_at(code, size)
+    validator.(target)
+    |> advance(rest, position + size, parsed_container_number)
+  end
+
+  defp advance({:error, _reason} = err, _code, _position, _parsed_container_number), do: err
+
+  defp advance({:ok, :check_digit, check_digit}, "", 11, parsed_container_number) do
+    %{ parsed_container_number | check_digit: check_digit }
+  end
+
+  defp advance({:ok, key, val}, remainder, next_position, intermediate_result) do
+    intermediate_result = Map.update!(intermediate_result, key, fn(_old) -> val end)
+    parse({remainder, next_position, intermediate_result})
   end
 
   def validate_owner_code(owner_code) do
@@ -76,16 +90,6 @@ defmodule IntermodalContainers.Parser do
       true ->
         {:ok, :check_digit, check_digit}
     end
-  end
-
-  def handle({:error, _reason} = err, _code, _position, _acc), do: err
-
-  def handle({:ok, :check_digit, check_digit}, "", 11, acc) do
-    %{ acc | check_digit: check_digit }
-  end
-
-  def handle({:ok, key, val}, remainder, next_position, acc) do
-    parse(remainder, next_position, Map.update!(acc, key, fn(_old) -> val end))
   end
 
 end
