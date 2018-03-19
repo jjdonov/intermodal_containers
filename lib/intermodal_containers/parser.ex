@@ -3,49 +3,31 @@ defmodule IntermodalContainers.Parser do
   alias IntermodalContainers.Alphabet
   alias IntermodalContainers.ContainerNumber
 
-  def parse({:error, reason}), do: {:error, reason}
-
-  def parse(code) do
+  def parse(code) when is_binary(code) and byte_size(code) == 11 do
     parse(code, 0, %ContainerNumber{})
   end
 
-  def parse(code, 0, acc) do
+  def parse(code, 0, acc) when byte_size(code) == 11 do
     {owner_code, rest} = String.split_at(code, 3)
-    case validate_owner_code(owner_code) do
-      {:ok, owner_code} ->
-        parse(rest, 3, %{ acc | owner_code: owner_code })
-      {:error, reason} ->
-        {:error, reason}
-    end
+    validate_owner_code(owner_code)
+    |> handle(rest, 3, acc)
   end
 
-  def parse(code, 3, acc) do
+  def parse(code, 3, acc) when byte_size(code) == 8 do
     {category_identifier, rest} = String.split_at(code, 1)
-    case validate_category_identifier(category_identifier) do
-      {:ok, category_identifier} ->
-        parse(rest, 4, %{ acc | category_identifier: category_identifier })
-      {:error, reason} ->
-        {:error, reason}
-    end
+    validate_category_identifier(category_identifier)
+    |> handle(rest, 4, acc)
   end
 
-  def parse(code, 4, acc) do
+  def parse(code, 4, acc) when byte_size(code) == 7 do
     {serial_number, rest} = String.split_at(code, 6)
-    case validate_serial_number(serial_number) do
-      {:ok, serial_number} ->
-        parse(rest, 10, %{ acc | serial_number: serial_number })
-      {:error, reason} ->
-        {:error, reason}
-    end
+    validate_serial_number(serial_number)
+    |> handle(rest, 10, acc)
   end
 
-  def parse(check_digit, 10, acc) do
-    case validate_check_digit(check_digit) do
-      {:ok, check_digit} ->
-        {:ok, %{ acc | check_digit: check_digit }}
-      {:error, reason} ->
-        {:error, reason}
-    end
+  def parse(check_digit, 10, acc) when byte_size(check_digit) == 1 do
+    validate_check_digit(check_digit)
+    |> handle("", 11, acc)
   end
 
   def parse(code, position, acc) do
@@ -59,7 +41,7 @@ defmodule IntermodalContainers.Parser do
       !Alphabet.all_letters(owner_code) ->
         {:error, "Owner code must be three capital letters. Got #{owner_code}"}
       true ->
-        {:ok, owner_code}
+        {:ok, :owner_code, owner_code}
     end
   end
 
@@ -70,7 +52,7 @@ defmodule IntermodalContainers.Parser do
       !(category_identifier in ["U", "J", "Z"]) ->
         {:error, "Category Identidier must be one of U, J, Z"}
       true ->
-        {:ok, category_identifier}
+        {:ok, :category_identifier, category_identifier}
     end
   end
 
@@ -81,7 +63,7 @@ defmodule IntermodalContainers.Parser do
       !Alphabet.all_digits(serial_number) ->
         {:error, "Serial Number must be comprised of digits. Got #{serial_number}"}
       true ->
-        {:ok, serial_number}
+        {:ok, :serial_number, serial_number}
     end
   end
 
@@ -92,8 +74,18 @@ defmodule IntermodalContainers.Parser do
       !Alphabet.is_digit(check_digit) ->
         {:error, "Check digit must be a digit."}
       true ->
-        {:ok, check_digit}
+        {:ok, :check_digit, check_digit}
     end
+  end
+
+  def handle({:error, _reason} = err, _code, _position, _acc), do: err
+
+  def handle({:ok, :check_digit, check_digit}, "", 11, acc) do
+    %{ acc | check_digit: check_digit }
+  end
+
+  def handle({:ok, key, val}, remainder, next_position, acc) do
+    parse(remainder, next_position, Map.update!(acc, key, fn(_old) -> val end))
   end
 
 end
