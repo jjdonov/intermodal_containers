@@ -1,7 +1,7 @@
-defmodule IntermodalContainers.Parser do
+defmodule IntermodalContainers.Identification.Parser do
 
-  alias IntermodalContainers.Alphabet
-  alias IntermodalContainers.ContainerNumber
+  alias IntermodalContainers.Identification.Alphabet
+  alias IntermodalContainers.Identification.ContainerNumber
 
   def parse(code) when is_binary(code) and byte_size(code) == 11 do
     parse_step({code, 0, %ContainerNumber{}})

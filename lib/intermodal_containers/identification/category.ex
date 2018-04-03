@@ -1,6 +1,6 @@
-defmodule IntermodalContainers.Category do
+defmodule IntermodalContainers.Identification.Category do
 
-  alias IntermodalContainers.ContainerNumber
+  alias IntermodalContainers.Identification.ContainerNumber
 
   def category(%ContainerNumber{category_identifier: id}) do
     category(id)

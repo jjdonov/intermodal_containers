@@ -13,11 +13,11 @@ defmodule IntermodalContainers.Size.Parser do
     %{length: length, width: width, height: height}
   end
 
-  def parse_l(code) when is_binary(code) and byte_size(code) == 1 do
+  defp parse_l(code) when is_binary(code) and byte_size(code) == 1 do
     Length.get(code)
   end
 
-  def parse_wh(code) when is_binary(code) and byte_size(code) == 1 do
+  defp parse_wh(code) when is_binary(code) and byte_size(code) == 1 do
     {Width.get(code), Height.get(code)}
   end
 

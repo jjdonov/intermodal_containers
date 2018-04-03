@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.ContainerNumber do
+defmodule IntermodalContainers.Identification.ContainerNumber do
 
   @moduledoc"""
   The identification system shall consist only of the following elements, all of which shall be included:
