@@ -3,8 +3,16 @@ defmodule IntermodalContainers.Identification.Parser do
   alias IntermodalContainers.Identification.Alphabet
   alias IntermodalContainers.Identification.ContainerNumber
 
+  def parse!(code) do
+    case parse(code) do
+      {:ok, result} ->
+        result
+      {:error, reason} ->
+        raise "ParseError: #{reason}"
+    end
+  end
+
   def parse(code) when is_binary(code) and byte_size(code) == 11 do
-    IO.puts "step 1"
     parse_step({code, 0, %ContainerNumber{}})
   end
 
