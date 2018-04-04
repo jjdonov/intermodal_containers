@@ -4,7 +4,16 @@ defmodule IntermodalContainers.Identification.Parser do
   alias IntermodalContainers.Identification.ContainerNumber
 
   def parse(code) when is_binary(code) and byte_size(code) == 11 do
+    IO.puts "step 1"
     parse_step({code, 0, %ContainerNumber{}})
+  end
+
+  def parse(code) when is_binary(code) do
+    {:error, "code is expected to be 11 bytes, has #{byte_size(code)}"}
+  end
+
+  def parse(code) do
+    {:error, "code must be a string"}
   end
 
   def parse_step({code, 0, _} = parse_state) when byte_size(code) == 11 do
@@ -40,12 +49,12 @@ defmodule IntermodalContainers.Identification.Parser do
   defp advance({:error, _reason} = err, _code, _position, _parsed_container_number), do: err
 
   defp advance({:ok, :check_digit, check_digit}, "", 11, parsed_container_number) do
-    %{ parsed_container_number | check_digit: check_digit }
+    {:ok, %{ parsed_container_number | check_digit: check_digit }}
   end
 
   defp advance({:ok, key, val}, remainder, next_position, intermediate_result) do
     intermediate_result = Map.update!(intermediate_result, key, fn(_old) -> val end)
-    parse({remainder, next_position, intermediate_result})
+    parse_step({remainder, next_position, intermediate_result})
   end
 
   def validate_owner_code(owner_code) do
