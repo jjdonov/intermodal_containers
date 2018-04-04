@@ -4,31 +4,61 @@ defmodule IntermodalContainers.Identification.Checksum do
   alias IntermodalContainers.Identification.Alphabet
 
   def check(%ContainerNumber{check_digit: check_digit} = container_number) do
-    actual_check_digit = String.to_integer(check_digit)
-    computed_check_digit = compute_check_sum(container_number)
-                           |> compute_check_digit()
-    computed_check_digit == actual_check_digit
+    actual = String.to_integer(check_digit)
+    computed = compute_check_digit(container_number)
+    compare(actual, computed)
   end
 
-  def compute_check_digit(check_sum) do
-    elevend = trunc(check_sum / 11) * 11
-    check_sum - elevend
+  def check(container_number) when is_binary(container_number) and byte_size(container_number) == 11 do
+    {to_sum, actual_check_digit} = raw_vals(container_number)
+    computed = compute_check_digit(to_sum)
+    compare(actual_check_digit, computed)
   end
 
-  def compute_check_sum(%ContainerNumber{} = container_number) do
+  def check(container_number) when is_binary(container_number), do: {:error, "Container Number must be"}
+
+  defp compare(actual, computed) do
+    actual == computed
+  end
+
+  defp compute_check_digit(container_number) do
+    container_number
+    |> compute_sum
+  end
+
+  defp compute_sum(%ContainerNumber{} = container_number) do
     raw_vals(container_number)
     |> Enum.flat_map(&String.codepoints(&1))
+    |> compute_sum_base()
+  end
+
+  defp compute_sum(slug) do
+    slug
+    |> String.codepoints()
+    |> compute_sum_base()
+  end
+
+  defp compute_sum_base(code_points) do
+    code_points
     |> Enum.map(&map_point(&1))
     |> Enum.with_index()
-    |> Enum.map(&calculate_step(&1))
+    |> Enum.map(&weight(&1))
     |> Enum.sum()
+    |> rem(11)
   end
 
   defp raw_vals(%ContainerNumber{} = container) do
     [container.owner_code, container.category_identifier, container.serial_number]
   end
 
-  def map_point(point) do
+  defp raw_vals(container_number) when is_binary(container_number) and byte_size(container_number) == 11 do
+    {to_sum, check_digit} = String.split_at(container_number, 10)
+    {to_sum, String.to_integer(check_digit)}
+  end
+
+  defp raw_vals(str), do: raise "can't dissect #{inspect str}"
+
+  defp map_point(point) do
     case Alphabet.contains(point) do
       true ->
         Alphabet.get(point)
@@ -37,7 +67,8 @@ defmodule IntermodalContainers.Identification.Checksum do
     end
   end
 
-  def calculate_step({val, step}) do
-    val * :math.pow(2, step)
+  defp weight({val, step}) do
+    val * trunc(:math.pow(2, step))
   end
+
 end

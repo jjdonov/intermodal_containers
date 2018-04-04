@@ -1,0 +1,21 @@
+defmodule IntermodalContainers.Identification.ChecksumTest do
+  use ExUnit.Case
+
+  alias IntermodalContainers.Identification.Checksum
+  alias IntermodalContainers.Identification.ContainerNumber
+
+  test "computes known check digit" do
+    assert true = Checksum.check("CSQU3054383")
+  end
+
+  test "computes for known ContainerNumber" do
+    container_number = %ContainerNumber{
+      category_identifier: "U",
+      check_digit: "3",
+      owner_code: "CSQ",
+      serial_number: "305438"
+    }
+    assert true = Checksum.check(container_number)
+  end
+
+end
