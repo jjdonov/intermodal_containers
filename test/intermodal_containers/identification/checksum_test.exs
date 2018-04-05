@@ -3,6 +3,7 @@ defmodule IntermodalContainers.Identification.ChecksumTest do
 
   alias IntermodalContainers.Identification.Checksum
   alias IntermodalContainers.Identification.ContainerNumber
+  alias IntermodalContainers.ParseError
 
   test "computes known check digit" do
     assert true = Checksum.check("CSQU3054383")
@@ -16,6 +17,10 @@ defmodule IntermodalContainers.Identification.ChecksumTest do
       serial_number: "305438"
     }
     assert true = Checksum.check(container_number)
+  end
+
+  test "returns :error when alphabet contains undefined code points" do
+    assert {:error, _} = Checksum.check("!!!!!!!!!!!")
   end
 
 end

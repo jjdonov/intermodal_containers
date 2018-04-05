@@ -1,7 +1,9 @@
 defmodule IntermodalContainers.Identification.Checksum do
 
-  alias IntermodalContainers.Identification.ContainerNumber
+  alias IntermodalContainers.ChecksumError
   alias IntermodalContainers.Identification.Alphabet
+  alias IntermodalContainers.Identification.ContainerNumber
+  alias IntermodalContainers.Identification.Parser
 
   def check(%ContainerNumber{check_digit: check_digit} = container_number) do
     actual = String.to_integer(check_digit)
@@ -9,13 +11,14 @@ defmodule IntermodalContainers.Identification.Checksum do
     compare(actual, computed)
   end
 
-  def check(container_number) when is_binary(container_number) and byte_size(container_number) == 11 do
-    {to_sum, actual_check_digit} = raw_vals(container_number)
-    computed = compute_check_digit(to_sum)
-    compare(actual_check_digit, computed)
+  def check(container_number) do
+    case Parser.parse(container_number) do
+      {:ok, container_number} ->
+        check(container_number)
+      {:error, message} ->
+        {:error, message}
+    end
   end
-
-  def check(container_number) when is_binary(container_number), do: {:error, "Container Number must be"}
 
   defp compare(actual, computed) do
     actual == computed

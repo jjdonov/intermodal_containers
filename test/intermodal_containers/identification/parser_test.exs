@@ -3,6 +3,7 @@ defmodule IntermodalContainers.Identification.ParserTest do
 
   alias IntermodalContainers.Identification.Parser
   alias IntermodalContainers.Identification.ContainerNumber
+  alias IntermodalContainers.ParseError
 
   test "parse rejects numbers" do
     assert {:error, _} = Parser.parse(123)
@@ -39,7 +40,7 @@ defmodule IntermodalContainers.Identification.ParserTest do
   end
 
   test "parse! raises RuntimeError" do
-    assert_raise RuntimeError, fn ->
+    assert_raise ParseError, fn ->
       Parser.parse!("123")
     end
   end
