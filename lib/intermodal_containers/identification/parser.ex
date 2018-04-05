@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.Identification.Parser do
-
   alias IntermodalContainers.Identification.Alphabet
   alias IntermodalContainers.Identification.ContainerNumber
   alias IntermodalContainers.ParseError
@@ -8,6 +7,7 @@ defmodule IntermodalContainers.Identification.Parser do
     case parse(code) do
       {:ok, result} ->
         result
+
       {:error, reason} ->
         raise %ParseError{message: reason}
     end
@@ -46,11 +46,14 @@ defmodule IntermodalContainers.Identification.Parser do
   end
 
   def parse_step({code, position, parsed_container_number}) do
-    {:error, "Unidentified parse step for #{code} at #{position}. State: #{inspect parsed_container_number}"}
+    err = "Unidentified parse step for #{code} at #{position}."
+          <> "State: #{inspect(parsed_container_number)}"
+    {:error, err}
   end
 
   defp consume({code, position, parsed_container_number}, size, validator) do
     {target, rest} = String.split_at(code, size)
+
     validator.(target)
     |> advance(rest, position + size, parsed_container_number)
   end
@@ -58,11 +61,11 @@ defmodule IntermodalContainers.Identification.Parser do
   defp advance({:error, _reason} = err, _code, _position, _parsed_container_number), do: err
 
   defp advance({:ok, :check_digit, check_digit}, "", 11, parsed_container_number) do
-    {:ok, %{ parsed_container_number | check_digit: check_digit }}
+    {:ok, %{parsed_container_number | check_digit: check_digit}}
   end
 
   defp advance({:ok, key, val}, remainder, next_position, intermediate_result) do
-    intermediate_result = Map.update!(intermediate_result, key, fn(_old) -> val end)
+    intermediate_result = Map.update!(intermediate_result, key, fn _old -> val end)
     parse_step({remainder, next_position, intermediate_result})
   end
 
@@ -70,8 +73,10 @@ defmodule IntermodalContainers.Identification.Parser do
     cond do
       byte_size(owner_code) != 3 ->
         {:error, "Owner code must be three letter long. Got #{owner_code}"}
+
       !Alphabet.all_letters(owner_code) ->
         {:error, "Owner code must be three capital letters. Got #{owner_code}"}
+
       true ->
         {:ok, :owner_code, owner_code}
     end
@@ -81,8 +86,10 @@ defmodule IntermodalContainers.Identification.Parser do
     cond do
       byte_size(category_identifier) != 1 ->
         {:error, "Category Identifier must be one letter long."}
+
       !(category_identifier in ["U", "J", "Z"]) ->
         {:error, "Category Identidier must be one of U, J, Z"}
+
       true ->
         {:ok, :category_identifier, category_identifier}
     end
@@ -92,8 +99,10 @@ defmodule IntermodalContainers.Identification.Parser do
     cond do
       byte_size(serial_number) != 6 ->
         {:error, "Serial Number must be 6 digits long. Got #{serial_number}"}
+
       !Alphabet.all_digits(serial_number) ->
         {:error, "Serial Number must be comprised of digits. Got #{serial_number}"}
+
       true ->
         {:ok, :serial_number, serial_number}
     end
@@ -103,11 +112,12 @@ defmodule IntermodalContainers.Identification.Parser do
     cond do
       byte_size(check_digit) != 1 ->
         {:error, "Check digit must be 1 digit long."}
+
       !Alphabet.is_digit(check_digit) ->
         {:error, "Check digit must be a digit."}
+
       true ->
         {:ok, :check_digit, check_digit}
     end
   end
-
 end

@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.Type.Codes do
-
   alias IntermodalContainers.Type.Code
 
   @gp_designation "General purpose container without ventilation"
@@ -10,7 +9,6 @@ defmodule IntermodalContainers.Type.Codes do
   @re_designation ""
   @rt_designation ""
   @rs_designation ""
-
 
   @all [
     %Code{code: "G", designation: @gp_designation, group_code: "GP"},
@@ -71,12 +69,11 @@ defmodule IntermodalContainers.Type.Codes do
     %Code{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R6"},
     %Code{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R7"},
     %Code{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R8"},
-    %Code{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R9"},
-    #TODO: finsih H, U, P, T groups
+    %Code{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R9"}
+    # TODO: finsih H, U, P, T groups
   ]
 
-  @map @all  |> Map.new(fn(c) -> {Code.most_specific_code(c), c} end)
+  @map @all |> Map.new(fn c -> {Code.most_specific_code(c), c} end)
 
   def get(code), do: Map.get(@map, code)
-
 end

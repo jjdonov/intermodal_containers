@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.Identification.Category do
-
   alias IntermodalContainers.Identification.ContainerNumber
 
   def category(%ContainerNumber{category_identifier: id}) do
@@ -21,5 +20,4 @@ defmodule IntermodalContainers.Identification.Category do
   def category("Z") do
     "trailers and chassis"
   end
-
 end

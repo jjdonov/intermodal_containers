@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.Identification.Checksum do
-
   alias IntermodalContainers.ChecksumError
   alias IntermodalContainers.Identification.Alphabet
   alias IntermodalContainers.Identification.ContainerNumber
@@ -15,6 +14,7 @@ defmodule IntermodalContainers.Identification.Checksum do
     case Parser.parse(container_number) do
       {:ok, container_number} ->
         check(container_number)
+
       {:error, message} ->
         {:error, message}
     end
@@ -54,17 +54,19 @@ defmodule IntermodalContainers.Identification.Checksum do
     [container.owner_code, container.category_identifier, container.serial_number]
   end
 
-  defp raw_vals(container_number) when is_binary(container_number) and byte_size(container_number) == 11 do
+  defp raw_vals(container_number)
+       when is_binary(container_number) and byte_size(container_number) == 11 do
     {to_sum, check_digit} = String.split_at(container_number, 10)
     {to_sum, String.to_integer(check_digit)}
   end
 
-  defp raw_vals(str), do: raise "can't dissect #{inspect str}"
+  defp raw_vals(str), do: raise("can't dissect #{inspect(str)}")
 
   defp map_point(point) do
     case Alphabet.contains(point) do
       true ->
         Alphabet.get(point)
+
       false ->
         raise "Illegal point: #{point}"
     end
@@ -73,5 +75,4 @@ defmodule IntermodalContainers.Identification.Checksum do
   defp weight({val, step}) do
     val * trunc(:math.pow(2, step))
   end
-
 end
