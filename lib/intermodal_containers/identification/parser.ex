@@ -13,7 +13,7 @@ defmodule IntermodalContainers.Identification.Parser do
     end
   end
 
-  def parse(code) when is_binary(code) and byte_size(code) == 11 do
+  def parse(code) when byte_size(code) == 11 do
     parse_step({code, 0, %ContainerNumber{}})
   end
 
@@ -21,7 +21,7 @@ defmodule IntermodalContainers.Identification.Parser do
     {:error, "code is expected to be 11 bytes, has #{byte_size(code)}"}
   end
 
-  def parse(code) do
+  def parse(_code) do
     {:error, "code must be a string"}
   end
 

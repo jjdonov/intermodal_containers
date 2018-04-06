@@ -54,8 +54,7 @@ defmodule IntermodalContainers.Identification.Checksum do
     [container.owner_code, container.category_identifier, container.serial_number]
   end
 
-  defp raw_vals(container_number)
-       when is_binary(container_number) and byte_size(container_number) == 11 do
+  defp raw_vals(container_number) when byte_size(container_number) == 11 do
     {to_sum, check_digit} = String.split_at(container_number, 10)
     {to_sum, String.to_integer(check_digit)}
   end

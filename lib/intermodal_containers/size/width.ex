@@ -40,4 +40,5 @@ defmodule IntermodalContainers.Size.Width do
   @map Map.new(@all, fn w -> {w.code_character, w} end)
 
   def get(code_character), do: Map.get(@map, code_character)
+
 end
