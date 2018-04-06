@@ -7,7 +7,6 @@ defmodule IntermodalContainers.Identification.Parser do
     case parse(code) do
       {:ok, result} ->
         result
-
       {:error, reason} ->
         raise %ParseError{message: reason}
     end

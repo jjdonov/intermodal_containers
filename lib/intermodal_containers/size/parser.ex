@@ -7,6 +7,14 @@ defmodule IntermodalContainers.Size.Parser do
   alias IntermodalContainers.Size.Height
   alias IntermodalContainers.Size.ExternalDimensions
 
+  def parse(code) do
+    try do
+      parse!(code)
+    rescue
+      e in ParseError -> {:error, e.message}
+    end
+  end
+
   def parse!(code) when byte_size(code) == 2 do
     {first, second} = String.split_at(code, 1)
     length = parse_l(first)
