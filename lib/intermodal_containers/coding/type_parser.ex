@@ -1,9 +1,8 @@
-defmodule IntermodalContainers.Type.Parser do
+defmodule IntermodalContainers.Coding.Parser do
 
   alias IntermodalContainers.ParseError
 
   alias IntermodalContainers.Size.Parser, as: SizeParser
-  alias IntermodalContainers.Characteristic.Parser, as: CharacteristicParser
 
   def parse(code) do
     try do
