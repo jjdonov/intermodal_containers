@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.Characteristics.TypeCodes do
+defmodule IntermodalContainers.Coding.TypeCodes do
   alias IntermodalContainers.Characteristics.TypeCode
 
   @gp_designation "General purpose container without ventilation"
