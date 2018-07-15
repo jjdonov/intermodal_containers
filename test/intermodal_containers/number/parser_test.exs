@@ -1,8 +1,8 @@
-defmodule IntermodalContainers.Identification.ParserTest do
+defmodule IntermodalContainers.Number.ParserTest do
   use ExUnit.Case
 
-  alias IntermodalContainers.Identification.Parser
-  alias IntermodalContainers.Identification.ContainerNumber
+  alias IntermodalContainers.ContainerNumber
+  alias IntermodalContainers.Number.Parser
   alias IntermodalContainers.ParseError
 
   test "parse rejects numbers" do

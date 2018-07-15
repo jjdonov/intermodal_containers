@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.Identification.Alphabet do
+defmodule IntermodalContainers.Number.Alphabet do
   @letters %{
     "A" => 10,
     "B" => 12,

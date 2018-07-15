@@ -1,23 +1,23 @@
-defmodule IntermodalContainers.Identification.Category do
-  alias IntermodalContainers.Identification.ContainerNumber
+defmodule IntermodalContainers.Number.Category do
+  alias IntermodalContainers.ContainerNumber
 
   def category(%ContainerNumber{category_identifier: id}) do
     category(id)
   end
 
-  def category("J") do
+  defp category("J") do
     "detachable freight container related equipment"
   end
 
-  def category("R") do
+  defp category("R") do
     "reefer (refridgerated) containers"
   end
 
-  def category("U") do
+  defp category("U") do
     "freight containers"
   end
 
-  def category("Z") do
+  defp category("Z") do
     "trailers and chassis"
   end
 end

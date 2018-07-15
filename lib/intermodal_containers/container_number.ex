@@ -1,4 +1,7 @@
-defmodule IntermodalContainers.Identification.ContainerNumber do
+defmodule IntermodalContainers.ContainerNumber do
+
+  alias IntermodalContainers.Number.Parser
+
   @moduledoc """
   The identification system shall consist only of the following elements, all of which shall be included:
   * owner code: three letters
@@ -10,4 +13,9 @@ defmodule IntermodalContainers.Identification.ContainerNumber do
             category_identifier: "",
             serial_number: "",
             check_digit: ""
+
+  def parse(container_number) do
+    Parser.parse(container_number)
+  end
+
 end

@@ -1,9 +1,8 @@
-defmodule IntermodalContainers.Identification.ChecksumTest do
+defmodule IntermodalContainers.Number.ChecksumTest do
   use ExUnit.Case
 
-  alias IntermodalContainers.Identification.Checksum
-  alias IntermodalContainers.Identification.ContainerNumber
-  alias IntermodalContainers.ParseError
+  alias IntermodalContainers.Number.Checksum
+  alias IntermodalContainers.ContainerNumber
 
   test "computes known check digit" do
     assert true = Checksum.check("CSQU3054383")

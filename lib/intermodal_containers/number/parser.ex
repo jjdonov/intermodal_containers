@@ -1,6 +1,7 @@
-defmodule IntermodalContainers.Identification.Parser do
-  alias IntermodalContainers.Identification.Alphabet
-  alias IntermodalContainers.Identification.ContainerNumber
+defmodule IntermodalContainers.Number.Parser do
+  alias IntermodalContainers.ContainerNumber
+
+  alias IntermodalContainers.Number.Alphabet
   alias IntermodalContainers.ParseError
 
   def parse!(code) do

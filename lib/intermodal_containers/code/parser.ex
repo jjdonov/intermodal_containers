@@ -1,10 +1,10 @@
-defmodule IntermodalContainers.Coding.Parser do
+defmodule IntermodalContainers.Code.Parser do
 
   alias IntermodalContainers.ParseError
 
-  alias IntermodalContainers.Coding.DooDoo
-  alias IntermodalContainers.Coding.SizeCodes
-  alias IntermodalContainers.Coding.TypeCodes
+  alias IntermodalContainers.ContainerCode
+  alias IntermodalContainers.Code.SizeCodes
+  alias IntermodalContainers.Code.TypeCodes
 
   def parse(code) do
     try do
@@ -15,7 +15,7 @@ defmodule IntermodalContainers.Coding.Parser do
   end
 
   def parse!(code) when byte_size(code) == 4 do
-    parse_step({code, 0, %DooDoo{}})
+    parse_step({code, 0, %ContainerCode{}})
   end
 
   defp parse_step({_rest, 0, %{}} = parse_state) do
@@ -70,16 +70,16 @@ defmodule IntermodalContainers.Coding.Parser do
     end
   end
 
-  defp update_state(%DooDoo{} = state, key, code) do
+  defp update_state(%ContainerCode{} = state, key, code) do
     Map.update!(state, key, fn _old -> code end)
   end
 
-  defp update_state(%DooDoo{} = state, [{key, code} | rest]) do
+  defp update_state(%ContainerCode{} = state, [{key, code} | rest]) do
     update_state(state, key, code)
     |> update_state(rest)
   end
 
-  defp update_state(%DooDoo{} = state, []),do: state
+  defp update_state(%ContainerCode{} = state, []),do: state
 
   defp lookup(:length, code), do: SizeCodes.get_length(code)
   defp lookup(:width,  code), do: SizeCodes.get_width(code)
