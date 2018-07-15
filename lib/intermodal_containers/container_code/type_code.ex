@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.Code.TypeCode do
+defmodule IntermodalContainers.ContainerCode.TypeCode do
   alias __MODULE__
 
   defstruct [:code, :designation, :group_code, :detailed_type_code, :characteristics]

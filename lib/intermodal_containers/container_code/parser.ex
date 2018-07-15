@@ -1,10 +1,10 @@
-defmodule IntermodalContainers.Code.Parser do
+defmodule IntermodalContainers.ContainerCode.Parser do
 
   alias IntermodalContainers.ParseError
 
   alias IntermodalContainers.ContainerCode
-  alias IntermodalContainers.Code.SizeCodes
-  alias IntermodalContainers.Code.TypeCodes
+  alias IntermodalContainers.ContainerCode.SizeCodes
+  alias IntermodalContainers.ContainerCode.TypeCodes
 
   def parse(code) do
     try do

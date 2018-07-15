@@ -1,8 +1,8 @@
-defmodule IntermodalContainers.Code.SizeCodes do
+defmodule IntermodalContainers.ContainerCode.SizeCodes do
 
-  alias IntermodalContainers.Code.SimpleCode
-  alias IntermodalContainers.Code.RangeCode
-  alias IntermodalContainers.Code.RangeBound, as: Bound
+  alias IntermodalContainers.ContainerCode.SimpleCode
+  alias IntermodalContainers.ContainerCode.RangeCode
+  alias IntermodalContainers.ContainerCode.RangeBound, as: Bound
 
   @lengths [
       %SimpleCode{code_character: "1", mm: 2991,  inches: 10 * 12},
