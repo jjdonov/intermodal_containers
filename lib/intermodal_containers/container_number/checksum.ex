@@ -1,9 +1,9 @@
-defmodule IntermodalContainers.Number.Checksum do
+defmodule IntermodalContainers.ContainerNumber.Checksum do
 
   alias IntermodalContainers.ContainerNumber
 
-  alias IntermodalContainers.Number.Alphabet
-  alias IntermodalContainers.Number.Parser
+  alias IntermodalContainers.ContainerNumber.Alphabet
+  alias IntermodalContainers.ContainerNumber.Parser
 
   def check(%ContainerNumber{check_digit: check_digit} = container_number) do
     actual = String.to_integer(check_digit)
