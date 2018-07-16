@@ -1,7 +1,7 @@
 defmodule IntermodalContainers.Number.ChecksumTest do
   use ExUnit.Case
 
-  alias IntermodalContainers.Number.Checksum
+  alias IntermodalContainers.ContainerNumber.Checksum
   alias IntermodalContainers.ContainerNumber
 
   test "computes known check digit" do

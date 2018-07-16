@@ -1,9 +1,11 @@
 defmodule IntermodalContainers.ContainerNumber do
 
-  alias IntermodalContainers.Number.Parser
+  alias IntermodalContainers.ContainerNumber.Parser
 
   @moduledoc """
-  The identification system shall consist only of the following elements, all of which shall be included:
+  The Container Number serves as the identification for a single intermodal container.
+
+  As defined by ISO 6346, the container number shall consist only of the following elements, all of which shall be included:
   * owner code: three letters
   * equipment category identifier: one letter
   * serial number: six numerals

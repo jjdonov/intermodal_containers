@@ -5,19 +5,19 @@ defmodule IntermodalContainers.ContainerNumber.Category do
     category(id)
   end
 
-  defp category("J") do
+  def category("J") do
     "detachable freight container related equipment"
   end
 
-  defp category("R") do
+  def category("R") do
     "reefer (refridgerated) containers"
   end
 
-  defp category("U") do
+  def category("U") do
     "freight containers"
   end
 
-  defp category("Z") do
+  def category("Z") do
     "trailers and chassis"
   end
 end
