@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.ContainerNumber.Checksum do
-
   alias IntermodalContainers.ContainerNumber
 
   alias IntermodalContainers.ContainerNumber.Alphabet

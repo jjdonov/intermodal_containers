@@ -15,11 +15,11 @@ defmodule IntermodalContainers.Number.ChecksumTest do
       owner_code: "CSQ",
       serial_number: "305438"
     }
+
     assert true = Checksum.check(container_number)
   end
 
   test "returns :error when alphabet contains undefined code points" do
     assert {:error, _} = Checksum.check("!!!!!!!!!!!")
   end
-
 end

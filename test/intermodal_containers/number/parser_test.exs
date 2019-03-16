@@ -18,25 +18,27 @@ defmodule IntermodalContainers.Number.ParserTest do
   end
 
   test "parse rejects strings with characters not defined in the alphabet" do
-    assert {:error, "Owner code must be three capital letters. Got !@#"} = Parser.parse("!@#$%^&*()_")
+    assert {:error, "Owner code must be three capital letters. Got !@#"} =
+             Parser.parse("!@#$%^&*()_")
   end
 
   test "parse accepts CSQU3054383" do
-    assert {:ok, %ContainerNumber{
-      category_identifier: "U",
-      check_digit: "3",
-      owner_code: "CSQ",
-      serial_number: "305438"
-    }} = Parser.parse("CSQU3054383")
+    assert {:ok,
+            %ContainerNumber{
+              category_identifier: "U",
+              check_digit: "3",
+              owner_code: "CSQ",
+              serial_number: "305438"
+            }} = Parser.parse("CSQU3054383")
   end
 
   test "parse! accepts CSQU3054383" do
     assert %ContainerNumber{
-      category_identifier: "U",
-      check_digit: "3",
-      owner_code: "CSQ",
-      serial_number: "305438"
-    } = Parser.parse!("CSQU3054383")
+             category_identifier: "U",
+             check_digit: "3",
+             owner_code: "CSQ",
+             serial_number: "305438"
+           } = Parser.parse!("CSQU3054383")
   end
 
   test "parse! raises RuntimeError" do
@@ -44,5 +46,4 @@ defmodule IntermodalContainers.Number.ParserTest do
       Parser.parse!("123")
     end
   end
-
 end

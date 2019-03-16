@@ -1,5 +1,4 @@
 defmodule IntermodalContainers do
-
   alias IntermodalContainers.ContainerCode
   alias IntermodalContainers.ContainerNumber
   alias IntermodalContainers.ContainerNumber.Checksum
@@ -19,14 +18,14 @@ defmodule IntermodalContainers do
 
   """
   def parse_container_number(container_number) do
-   ContainerNumber.parse(container_number) 
+    ContainerNumber.parse(container_number)
   end
 
   @doc """
   Performs checksum on the given container number.
   """
   def checksum(container_number) do
-   Checksum.check(container_number) 
+    Checksum.check(container_number)
   end
 
   @doc """
@@ -39,5 +38,4 @@ defmodule IntermodalContainers do
   def parse_container_code(container_code) do
     ContainerCode.parse(container_code)
   end
-
 end

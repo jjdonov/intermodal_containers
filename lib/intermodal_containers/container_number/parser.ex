@@ -8,6 +8,7 @@ defmodule IntermodalContainers.ContainerNumber.Parser do
     case parse(code) do
       {:ok, result} ->
         result
+
       {:error, reason} ->
         raise %ParseError{message: reason}
     end
@@ -46,8 +47,10 @@ defmodule IntermodalContainers.ContainerNumber.Parser do
   end
 
   def parse_step({code, position, parsed_container_number}) do
-    err = "Unidentified parse step for #{code} at #{position}."
-          <> "State: #{inspect(parsed_container_number)}"
+    err =
+      "Unidentified parse step for #{code} at #{position}." <>
+        "State: #{inspect(parsed_container_number)}"
+
     {:error, err}
   end
 

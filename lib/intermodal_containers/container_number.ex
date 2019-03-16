@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.ContainerNumber do
-
   alias IntermodalContainers.ContainerNumber.Parser
 
   @moduledoc """
@@ -19,5 +18,4 @@ defmodule IntermodalContainers.ContainerNumber do
   def parse(container_number) do
     Parser.parse(container_number)
   end
-
 end

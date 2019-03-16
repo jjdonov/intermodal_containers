@@ -1,7 +1,7 @@
 defmodule IntermodalContainers.ContainerCode do
   @moduledoc """
   Container Codes indicate the size (specific or range) and type of container.
-  
+
   A container code is comprised of 4 characters:
   * Size: two alphanumeric characters
   * Type: two characters
@@ -15,7 +15,7 @@ defmodule IntermodalContainers.ContainerCode do
   """
   alias IntermodalContainers.ContainerCode.Parser
 
-  defstruct [:length, :width, :height,  :type]
+  defstruct [:length, :width, :height, :type]
 
   def parse(container_code) do
     Parser.parse(container_code)
