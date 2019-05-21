@@ -1,21 +1,10 @@
 defmodule IntermodalContainers.ContainerNumber.Parser do
-  @moduledoc false
-
   alias IntermodalContainers.ContainerNumber
-
   alias IntermodalContainers.ContainerNumber.Alphabet
-  alias IntermodalContainers.ParseError
-
-  def parse!(code) do
-    case parse(code) do
-      {:ok, result} ->
-        result
-
-      {:error, reason} ->
-        raise %ParseError{message: reason}
-    end
-  end
-
+  
+  @type result() :: {:ok, %ContainerNumber{}} | {:error, String.t()}
+  
+  @spec parse(String.t()) :: result()
   def parse(code) when byte_size(code) == 11 do
     parse_step({code, 0, %ContainerNumber{}})
   end
