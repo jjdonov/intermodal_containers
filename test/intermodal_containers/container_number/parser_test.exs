@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.Number.ParserTest do
+defmodule IntermodalContainers.ContainerNumber.ParserTest do
   use ExUnit.Case
 
   alias IntermodalContainers.ContainerNumber

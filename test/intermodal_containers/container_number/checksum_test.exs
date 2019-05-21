@@ -1,4 +1,4 @@
-defmodule IntermodalContainers.Number.ChecksumTest do
+defmodule IntermodalContainers.ContainerNumber.ChecksumTest do
   use ExUnit.Case
 
   alias IntermodalContainers.ContainerNumber.Checksum
