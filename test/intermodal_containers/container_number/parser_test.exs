@@ -32,18 +32,4 @@ defmodule IntermodalContainers.ContainerNumber.ParserTest do
             }} = Parser.parse("CSQU3054383")
   end
 
-  test "parse! accepts CSQU3054383" do
-    assert %ContainerNumber{
-             category_identifier: "U",
-             check_digit: "3",
-             owner_code: "CSQ",
-             serial_number: "305438"
-           } = Parser.parse!("CSQU3054383")
-  end
-
-  test "parse! raises RuntimeError" do
-    assert_raise ParseError, fn ->
-      Parser.parse!("123")
-    end
-  end
 end

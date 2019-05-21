@@ -31,15 +31,10 @@ defmodule IntermodalContainers.ContainerNumber.Checksum do
     |> compute_sum
   end
 
+  @spec compute_sum(%ContainerNumber{}) :: integer()
   defp compute_sum(%ContainerNumber{} = container_number) do
     raw_vals(container_number)
     |> Enum.flat_map(&String.codepoints(&1))
-    |> compute_sum_base()
-  end
-
-  defp compute_sum(slug) do
-    slug
-    |> String.codepoints()
     |> compute_sum_base()
   end
 
@@ -55,13 +50,6 @@ defmodule IntermodalContainers.ContainerNumber.Checksum do
   defp raw_vals(%ContainerNumber{} = container) do
     [container.owner_code, container.category_identifier, container.serial_number]
   end
-
-  defp raw_vals(container_number) when byte_size(container_number) == 11 do
-    {to_sum, check_digit} = String.split_at(container_number, 10)
-    {to_sum, String.to_integer(check_digit)}
-  end
-
-  defp raw_vals(str), do: raise("can't dissect #{inspect(str)}")
 
   defp map_point(point) do
     case Alphabet.contains(point) do
