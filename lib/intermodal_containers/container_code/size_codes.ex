@@ -1,4 +1,6 @@
 defmodule IntermodalContainers.ContainerCode.SizeCodes do
+  @moduledoc false
+
   alias IntermodalContainers.ContainerCode.SimpleCode
   alias IntermodalContainers.ContainerCode.RangeCode
   alias IntermodalContainers.ContainerCode.RangeBound, as: Bound

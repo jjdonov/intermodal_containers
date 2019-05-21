@@ -1,4 +1,6 @@
 defmodule IntermodalContainers.ContainerNumber.Alphabet do
+  @moduledoc false
+
   @letters %{
     "A" => 10,
     "B" => 12,

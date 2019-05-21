@@ -1,4 +1,6 @@
 defmodule IntermodalContainers.ContainerCode.Parser do
+  @moduledoc false
+
   alias IntermodalContainers.ParseError
 
   alias IntermodalContainers.ContainerCode

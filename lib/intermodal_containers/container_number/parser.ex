@@ -1,4 +1,6 @@
 defmodule IntermodalContainers.ContainerNumber.Parser do
+  @moduledoc false
+
   alias IntermodalContainers.ContainerNumber
 
   alias IntermodalContainers.ContainerNumber.Alphabet
