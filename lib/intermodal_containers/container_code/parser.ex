@@ -7,18 +7,14 @@ defmodule IntermodalContainers.ContainerCode.Parser do
 
   def parse(code) do
     try do
-      parse!(code)
+      parse_step({code, 0, %ContainerCode{}})
     rescue
       e in ParseError -> {:error, e.message}
+      UndefinedFunctionError -> {:error, "invalid container code"}
     end
   end
 
-  def parse!(code) when byte_size(code) == 4 do
-    parse_step({code, 0, %ContainerCode{}})
-  end
-
   defp parse_step({_rest, 0, %{}} = parse_state) do
-    # fn s -> %{ s |  }) #idea: if we pass updateFn
     consume(parse_state, 1, &accept_l/1)
   end
 
@@ -30,7 +26,7 @@ defmodule IntermodalContainers.ContainerCode.Parser do
     consume(parse_state, 2, &accept_type/1)
   end
 
-  defp parse_step({_, 4, result}), do: result
+  defp parse_step({_, 4, result}), do: {:ok, result}
 
   defp accept_l(size_code) do
     l = lookup(:length, size_code)
