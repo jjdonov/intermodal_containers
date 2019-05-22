@@ -6,6 +6,9 @@ defmodule IntermodalContainers.ContainerNumber.Checksum do
   alias IntermodalContainers.ContainerNumber.Alphabet
   alias IntermodalContainers.ContainerNumber.Parser
 
+  @type container_number() :: String.t() | %ContainerNumber{}
+
+  @spec check(container_number()) :: boolean()
   def check(%ContainerNumber{check_digit: check_digit} = container_number) do
     actual = String.to_integer(check_digit)
     computed = compute_check_digit(container_number)

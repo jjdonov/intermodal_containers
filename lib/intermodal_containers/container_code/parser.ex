@@ -1,17 +1,17 @@
 defmodule IntermodalContainers.ContainerCode.Parser do
   @moduledoc false
 
-  alias IntermodalContainers.ParseError
-
   alias IntermodalContainers.ContainerCode
   alias IntermodalContainers.ContainerCode.SizeCodes
   alias IntermodalContainers.ContainerCode.TypeCodes
+  
+  @type result() :: {:ok, %ContainerCode{}} | {:error, String.t()}
 
+  @spec parse(String.t()) :: result()
   def parse(code) do
     try do
       parse_step({code, 0, %ContainerCode{}})
     rescue
-      e in ParseError -> {:error, e.message}
       UndefinedFunctionError -> {:error, "invalid container code"}
     end
   end

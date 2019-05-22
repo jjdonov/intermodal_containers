@@ -1,6 +1,8 @@
 defmodule IntermodalContainers do
   alias IntermodalContainers.ContainerCode
+  alias IntermodalContainers.ContainerCode.Parser, as: CodeParser
   alias IntermodalContainers.ContainerNumber
+  alias IntermodalContainers.ContainerNumber.Parser, as: NumberParser
   alias IntermodalContainers.ContainerNumber.Checksum
 
   @moduledoc """
@@ -28,6 +30,7 @@ defmodule IntermodalContainers do
   }}
 
   """
+  @spec parse_container_number(String.t()) ::  NumberParser.result()
   def parse_container_number(container_number) do
     ContainerNumber.parse(container_number)
   end
@@ -41,6 +44,7 @@ defmodule IntermodalContainers do
   true
 
   """
+  @spec checksum(Checksum.container_number()) :: boolean()
   def checksum(container_number) do
     Checksum.check(container_number)
   end
@@ -85,6 +89,7 @@ defmodule IntermodalContainers do
    }}
 
   """
+  @spec parse_container_code(String.t()) :: CodeParser.result()
   def parse_container_code(container_code) do
     ContainerCode.parse(container_code)
   end
