@@ -16,7 +16,6 @@ defmodule IntermodalContainers.ContainerNumber do
             serial_number: "",
             check_digit: ""
 
-
   @spec parse(String.t()) :: Parser.result()
   def parse(container_number) do
     Parser.parse(container_number)

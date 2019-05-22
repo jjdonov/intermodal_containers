@@ -28,7 +28,7 @@ defmodule IntermodalContainers.ContainerCode.ParserTest do
     "42P9",
     "42PF",
     "42PS",
-    #"42RC",
+    # "42RC",
     "42RS",
     "42RT",
     "42SN",
@@ -36,7 +36,7 @@ defmodule IntermodalContainers.ContainerCode.ParserTest do
     "42T6",
     "42TG",
     "42TN",
-    #"42UP",
+    # "42UP",
     "42UT",
     "45BK",
     "45GP",
@@ -46,7 +46,7 @@ defmodule IntermodalContainers.ContainerCode.ParserTest do
     # "45RC",
     "45RT",
     "45UT",
-    #"45UP",
+    # "45UP",
     "46HR",
     "48TG",
     "49PL",
@@ -57,10 +57,9 @@ defmodule IntermodalContainers.ContainerCode.ParserTest do
   ]
 
   @wikipedia_examples
-  |> Enum.each(fn(container_code) ->
+  |> Enum.each(fn container_code ->
     test "parse accepts #{container_code}" do
       assert {:ok, _} = Parser.parse(unquote(container_code))
     end
   end)
-
 end

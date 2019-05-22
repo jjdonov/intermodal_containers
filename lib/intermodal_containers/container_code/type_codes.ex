@@ -336,7 +336,12 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
       group_code: "RS",
       detailed_type_code: "R8"
     },
-    %TypeCode{code: "R", designation: @rs_designation, group_code: "RS", detailed_type_code: "R9"},
+    %TypeCode{
+      code: "R",
+      designation: @rs_designation,
+      group_code: "RS",
+      detailed_type_code: "R9"
+    },
     #
     %TypeCode{
       code: "H",
@@ -370,7 +375,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "H",
       designation: @hi_designation,
-      group_code: "HI",
+      group_code: "HI"
     },
     %TypeCode{
       code: "H",
@@ -406,7 +411,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "U",
       designation: @ut_designation,
-      group_code: "UT",
+      group_code: "UT"
     },
     %TypeCode{
       code: "U",
@@ -472,7 +477,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "P",
       designation: @pl_designation,
-      group_code: "PL",
+      group_code: "PL"
     },
     %TypeCode{
       code: "P",
@@ -483,7 +488,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "P",
       designation: @pf_designation,
-      group_code: "PF",
+      group_code: "PF"
     },
     %TypeCode{
       code: "P",
@@ -500,7 +505,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "P",
       designation: @pc_designation,
-      group_code: "PC",
+      group_code: "PC"
     },
     %TypeCode{
       code: "P",
@@ -517,7 +522,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "P",
       designation: @ps_designation,
-      group_code: "PS",
+      group_code: "PS"
     },
     %TypeCode{
       code: "P",
@@ -576,7 +581,7 @@ defmodule IntermodalContainers.ContainerCode.TypeCodes do
     %TypeCode{
       code: "T",
       designation: @td_designation,
-      group_code: "TD",
+      group_code: "TD"
     },
     %TypeCode{
       code: "T",

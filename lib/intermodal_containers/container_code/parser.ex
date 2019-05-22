@@ -4,7 +4,7 @@ defmodule IntermodalContainers.ContainerCode.Parser do
   alias IntermodalContainers.ContainerCode
   alias IntermodalContainers.ContainerCode.SizeCodes
   alias IntermodalContainers.ContainerCode.TypeCodes
-  
+
   @type result() :: {:ok, %ContainerCode{}} | {:error, String.t()}
 
   @spec parse(String.t()) :: result()

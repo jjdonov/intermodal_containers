@@ -1,9 +1,9 @@
 defmodule IntermodalContainers.ContainerNumber.Parser do
   alias IntermodalContainers.ContainerNumber
   alias IntermodalContainers.ContainerNumber.Alphabet
-  
+
   @type result() :: {:ok, %ContainerNumber{}} | {:error, String.t()}
-  
+
   @spec parse(String.t()) :: result()
   def parse(code) when byte_size(code) == 11 do
     parse_step({code, 0, %ContainerNumber{}})

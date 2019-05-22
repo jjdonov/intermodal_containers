@@ -30,5 +30,4 @@ defmodule IntermodalContainers.ContainerNumber.ParserTest do
               serial_number: "305438"
             }} = Parser.parse("CSQU3054383")
   end
-
 end

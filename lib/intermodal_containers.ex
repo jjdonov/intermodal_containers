@@ -30,7 +30,7 @@ defmodule IntermodalContainers do
   }}
 
   """
-  @spec parse_container_number(String.t()) ::  NumberParser.result()
+  @spec parse_container_number(String.t()) :: NumberParser.result()
   def parse_container_number(container_number) do
     ContainerNumber.parse(container_number)
   end
