@@ -3,7 +3,6 @@ defmodule IntermodalContainers.ContainerNumber.ParserTest do
 
   alias IntermodalContainers.ContainerNumber
   alias IntermodalContainers.ContainerNumber.Parser
-  alias IntermodalContainers.ParseError
 
   test "parse rejects numbers" do
     assert {:error, _} = Parser.parse(123)
