@@ -1,5 +1,4 @@
 defmodule IntermodalContainers.ContainerNumber do
-  alias __MODULE__
   alias IntermodalContainers.ContainerNumber.Parser
 
   @moduledoc """

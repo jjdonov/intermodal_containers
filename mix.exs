@@ -7,7 +7,24 @@ defmodule IntermodalContainers.Mixfile do
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description: description(),
+      package: package(),
+
+    ]
+  end
+
+  def description do
+    """
+    IntermodalContainers is an ISO 6346 implementation for Elixir.
+    """
+  end
+
+  def package do
+    [
+      maintainers: ["John Donovan"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/jjdonov/intermodal_containers"}
     ]
   end
 
@@ -21,7 +38,8 @@ defmodule IntermodalContainers.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.20.2", only: [:dev], runtime: false}
     ]
   end
 end
