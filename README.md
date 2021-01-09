@@ -1,7 +1,7 @@
 # IntermodalContainers
 
 
-The IntermodalContainers library aims to be a compliant and full featured implementation of ISO 6346. ISO 6346 provides a standardfor for identification of freight containers.
+The IntermodalContainers library aims to be a compliant and full featured implementation of ISO 6346. ISO 6346 provides a standard for the identification of freight containers.
 
 ## Features
 
